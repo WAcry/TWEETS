@@ -61,5 +61,19 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
             <version>2.1.5.RELEASE</version>
         </dependency>
+
+        <!-- MySQL Driver -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.29</version>
+        </dependency>
+
+        <!-- Mybatis Driver -->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>2.2.2</version>
+        </dependency>
     </dependencies>
 </project>

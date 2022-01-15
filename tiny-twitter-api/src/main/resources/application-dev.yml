@@ -1,0 +1,10 @@
+# web server config
+server:
+  port: 8088
+
+# data source config
+spring:
+  datasource:
+    url: jdbc:mysql://192.168.83.138:3306/tiny-twitter-dev?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
+    username: root
+    password: password

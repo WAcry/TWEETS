@@ -1,6 +1,5 @@
 # web server config
 server:
-  port: 8088
   tomcat:
     uri-encoding: UTF-8
   max-http-header-size: 80KB
@@ -8,12 +7,11 @@ server:
 
 # data source config
 spring:
+  profiles:
+    active: dev
   datasource:
     type: com.zaxxer.hikari.HikariDataSource          # HikariCP data source framework
     driver-class-name: com.mysql.cj.jdbc.Driver          # mysql driver for mysql 8
-    url: jdbc:mysql://192.168.83.138:3306/tiny-twitter-dev?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
-    username: root
-    password: password
     hikari:
       connection-timeout: 30000             # timeout for waiting for a connection from the pool (milliseconds)
       minimum-idle: 5                       # minimum number of idle connections

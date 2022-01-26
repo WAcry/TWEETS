@@ -3,9 +3,12 @@ package com.ziyuan.mapper;
 import com.ziyuan.pojo.Test;
 import com.ziyuan.pojo.TestExample;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+// add @Repository here to avoid warning on @Autowired in service layer
+@Repository
 public interface TestMapper {
     long countByExample(TestExample example);
 

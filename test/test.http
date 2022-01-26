@@ -1,0 +1,12 @@
+POST http://localhost:8088/test
+Content-Type: application/json
+
+{
+  "id": "1741894",
+  "str": "Hello World",
+  "datetime": "2017-01-01T00:00:00.000Z",
+  "a": "aa",
+  "b": "bb",
+  "c": "cc",
+  "json": "{\"a\":\"aa\",\"b\":\"bb\",\"c\":\"cc\"}"
+}

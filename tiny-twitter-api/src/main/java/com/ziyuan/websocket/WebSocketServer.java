@@ -1,19 +1,18 @@
 package com.ziyuan.websocket;
 
 import com.ziyuan.controller.BaseController;
-import com.ziyuan.pojo.bo.UserBO;
 import com.ziyuan.utils.JsonUtils;
 import com.ziyuan.utils.WebSocketUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.websocket.*;
+import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
 @Component
-@ServerEndpoint("/websocket")
+@ServerEndpoint("/websocket/{token}")
 public class WebSocketServer extends BaseController {
     private static final Logger LOG = LoggerFactory.getLogger(WebSocketServer.class);
 
@@ -23,9 +22,8 @@ public class WebSocketServer extends BaseController {
      * Connection open
      */
     @OnOpen
-    public void onOpen(Session session, @RequestBody UserBO userBO) {
-        if (!auth(userBO.getUsername(), userBO.getToken())) return;
-        token = userBO.getToken();
+    public void onOpen(Session session, @PathParam("token") String token) {
+        this.token = token;
         WebSocketUtil.CLIENTS.put(token, session);
         JsonUtils.objectToJson(session);
         LOG.info("New Connection：token：{}，session id：{}，Connection Count：{}", token, session.getId(), WebSocketUtil.CLIENTS.size());

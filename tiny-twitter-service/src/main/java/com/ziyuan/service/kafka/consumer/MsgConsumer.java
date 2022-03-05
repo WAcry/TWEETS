@@ -1,9 +1,6 @@
 package com.ziyuan.service.kafka.consumer;
 
-import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.apache.kafka.clients.consumer.ConsumerRecords;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.apache.kafka.clients.consumer.*;
 import org.apache.kafka.common.TopicPartition;
 import org.apache.kafka.common.serialization.StringDeserializer;
 
@@ -24,11 +21,14 @@ public class MsgConsumer {
         properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         properties.put(ConsumerConfig.GROUP_ID_CONFIG, "group_0");
         properties.put(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, "30000");
-        properties.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "true");
-        properties.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, "5000");
+        properties.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "false");
+        properties.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "latest");
+//        properties.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "true");
+//        properties.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, "5000");
 
         try (KafkaConsumer<String, String> consumer = new KafkaConsumer<>(properties)) {
             consumer.subscribe(Collections.singletonList(KAFKA_TOPIC_0));
+//          consumer.assign(Collections.singletonList(new TopicPartition(KAFKA_TOPIC_0, 0))); // assign to a specific partition
             while (true) {
                 ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(1000));
                 for (TopicPartition partition : records.partitions()) {
@@ -43,11 +43,10 @@ public class MsgConsumer {
                         long offset = record.offset();
                         long commitOffset = offset + 1;
                         System.out.println("key: " + key + " value: " + value + " offset: " + offset + " commitOffset: " + commitOffset);
+                        consumer.commitSync(Collections.singletonMap(partition, new OffsetAndMetadata(commitOffset)));
                     }
                 }
             }
         }
-
-
     }
 }

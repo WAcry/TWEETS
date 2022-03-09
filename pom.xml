@@ -153,6 +153,13 @@
             <artifactId>kafka_2.12</artifactId>
         </dependency>
 
+        <!-- Spring Kafka-->
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+            <version>2.2.6.RELEASE</version>
+        </dependency>
+
         <!-- lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>

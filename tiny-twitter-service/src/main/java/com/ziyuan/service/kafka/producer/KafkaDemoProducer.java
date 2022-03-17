@@ -12,7 +12,7 @@ import java.util.Properties;
 import static com.ziyuan.service.kafka.Const.KAFKA_SERVER;
 import static com.ziyuan.service.kafka.Const.KAFKA_TOPIC_0;
 
-public class MsgProducer {
+public class KafkaDemoProducer {
     public static void main(String[] args) {
         Properties properties = new Properties();
         properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_SERVER);

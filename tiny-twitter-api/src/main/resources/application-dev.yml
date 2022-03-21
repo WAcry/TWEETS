@@ -8,6 +8,8 @@ spring:
     url: jdbc:mysql://192.168.83.138:3306/tiny-twitter-dev?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
     username: root
     password: password
+  kafka:
+    bootstrap-servers: 192.168.83.142:9092
 
 # mybatis config
 mybatis:

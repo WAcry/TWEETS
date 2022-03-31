@@ -1,4 +1,4 @@
-package com.ziyuan.service.kafka;
+package com.ziyuan.service.kafka.demo;
 
 public interface Const {
     String KAFKA_TOPIC_0 = "topic_0";

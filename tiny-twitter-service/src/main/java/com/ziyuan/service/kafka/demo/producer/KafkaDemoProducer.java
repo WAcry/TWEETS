@@ -1,4 +1,4 @@
-package com.ziyuan.service.kafka.producer;
+package com.ziyuan.service.kafka.demo.producer;
 
 import com.ziyuan.pojo.ko.KafkaTest;
 import com.ziyuan.utils.JsonUtils;
@@ -9,8 +9,8 @@ import org.apache.kafka.common.serialization.StringSerializer;
 
 import java.util.Properties;
 
-import static com.ziyuan.service.kafka.Const.KAFKA_SERVER;
-import static com.ziyuan.service.kafka.Const.KAFKA_TOPIC_0;
+import static com.ziyuan.service.kafka.demo.Const.KAFKA_SERVER;
+import static com.ziyuan.service.kafka.demo.Const.KAFKA_TOPIC_0;
 
 public class KafkaDemoProducer {
     public static void main(String[] args) {

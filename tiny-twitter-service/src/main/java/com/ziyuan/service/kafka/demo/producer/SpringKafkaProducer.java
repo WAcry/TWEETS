@@ -1,4 +1,4 @@
-package com.ziyuan.service.kafka.producer;
+package com.ziyuan.service.kafka.demo.producer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

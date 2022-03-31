@@ -1,4 +1,4 @@
-package com.ziyuan.service.kafka.consumer;
+package com.ziyuan.service.kafka.demo.consumer;
 
 import org.apache.kafka.clients.consumer.*;
 import org.apache.kafka.common.TopicPartition;
@@ -9,8 +9,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
-import static com.ziyuan.service.kafka.Const.KAFKA_SERVER;
-import static com.ziyuan.service.kafka.Const.KAFKA_TOPIC_0;
+import static com.ziyuan.service.kafka.demo.Const.KAFKA_SERVER;
+import static com.ziyuan.service.kafka.demo.Const.KAFKA_TOPIC_0;
 
 public class KafkaDemoConsumer {
 

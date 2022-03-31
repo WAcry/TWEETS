@@ -1,4 +1,4 @@
-package com.ziyuan.service.kafka.consumer;
+package com.ziyuan.service.kafka.demo.consumer;
 
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;

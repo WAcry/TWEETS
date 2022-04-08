@@ -90,7 +90,7 @@ public class UserController extends BaseController {
             HttpServletResponse response) {
 
         if (!auth(userBO.getUserId(), userBO.getToken())) {
-            return JSONResult.errorMsg("already logout before");
+            return JSONResult.errorMsg("please login again");
         }
 
         redis.del("token:" + userBO.getUserId());

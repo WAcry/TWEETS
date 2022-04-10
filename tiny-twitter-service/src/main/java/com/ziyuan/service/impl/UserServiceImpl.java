@@ -8,8 +8,8 @@ import com.ziyuan.service.UserService;
 import com.ziyuan.utils.JsonUtils;
 import com.ziyuan.utils.KafkaOperator;
 import com.ziyuan.utils.MD5Utils;
+import com.ziyuan.utils.SnowFlakeGenerator;
 import org.apache.commons.lang3.StringUtils;
-import org.n3r.idworker.Sid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +19,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private Sid sid;
+    private SnowFlakeGenerator snowflake;
 
     @Autowired
     private UserMapper userMapper;
@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void signup(UserBO userBO) {
         User user = new User();
-        user.setId(sid.nextShort());
+        user.setId(snowflake.nextUUID());
         user.setUsername(userBO.getUsername());
         try {
             user.setPassword(MD5Utils.getMD5Str(userBO.getPassword()));

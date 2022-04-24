@@ -20,3 +20,6 @@ mybatis:
 snowflake:
   machineId: 1
   datacenterId: 2
+  sequenceBit: 10
+  machineBit: 10
+  datacenterBit: 2

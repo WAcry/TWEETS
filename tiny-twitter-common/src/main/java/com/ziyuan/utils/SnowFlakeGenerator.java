@@ -23,16 +23,14 @@ public class SnowFlakeGenerator {
      * bits of each part
      * seq_bit + mac_bit + dat_bit + timestamp_bit_diff(=40) < 63 bit (2^63 - 1 = LONG_MAX)
      */
-    private final static long SEQUENCE_BIT = 12; // bits of sequence
-    private final static long MACHINE_BIT = 7;   // bits of machine
-    private final static long DATACENTER_BIT = 3;// bits of datacenter
+    @Value("${snowflake.sequenceBit}")
+    private static long SEQUENCE_BIT; // bits of sequence
+    @Value("${snowflake.machineBit}")
+    private static long MACHINE_BIT;   // bits of machine
+    @Value("${snowflake.datacenterBit}")
+    private static long DATACENTER_BIT;// bits of datacenter
 
-    /**
-     * max value of each part
-     */
-    private final static long MAX_DATACENTER_NUM = ~(-1L << DATACENTER_BIT);
-    private final static long MAX_MACHINE_NUM = ~(-1L << MACHINE_BIT);
-    private final static long MAX_SEQUENCE = ~(-1L << SEQUENCE_BIT);
+    private final long MAX_SEQUENCE = ~(-1L << SEQUENCE_BIT);
 
     /**
      * shift of each part
@@ -52,9 +50,14 @@ public class SnowFlakeGenerator {
     }
 
     public SnowFlakeGenerator(long datacenterId, long machineId) {
+        /*
+         * max value of each part
+         */
+        long MAX_DATACENTER_NUM = ~(-1L << DATACENTER_BIT);
         if (datacenterId > MAX_DATACENTER_NUM || datacenterId < 0) {
             throw new IllegalArgumentException("datacenterId can't be greater than MAX_DATACENTER_NUM or less than 0");
         }
+        long MAX_MACHINE_NUM = ~(-1L << MACHINE_BIT);
         if (machineId > MAX_MACHINE_NUM || machineId < 0) {
             throw new IllegalArgumentException("machineId can't be greater than MAX_MACHINE_NUM or less than 0");
         }

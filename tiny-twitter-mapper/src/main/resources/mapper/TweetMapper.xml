@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ziyuan.mapper.UserMapper">
-  <resultMap id="BaseResultMap" type="com.ziyuan.pojo.User">
+<mapper namespace="com.ziyuan.mapper.TweetMapper">
+  <resultMap id="BaseResultMap" type="com.ziyuan.pojo.Tweet">
     <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="username" jdbcType="VARCHAR" property="username" />
-    <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="profile_img" jdbcType="VARCHAR" property="profileImg" />
-    <result column="is_star" jdbcType="INTEGER" property="isStar" />
+    <result column="userId" jdbcType="VARCHAR" property="userid" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="attached_img" jdbcType="VARCHAR" property="attachedImg" />
+    <result column="deleted_at" jdbcType="INTEGER" property="deletedAt" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -67,15 +68,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, username, `password`, profile_img, is_star
+    id, userId, content, attached_img, deleted_at, created_at
   </sql>
-  <select id="selectByExample" parameterType="com.ziyuan.pojo.UserExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.ziyuan.pojo.TweetExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from user
+    from tweet
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -86,85 +87,96 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from user
+    from tweet
     where id = #{id,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from user
+    delete from tweet
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.ziyuan.pojo.UserExample">
-    delete from user
+  <delete id="deleteByExample" parameterType="com.ziyuan.pojo.TweetExample">
+    delete from tweet
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.ziyuan.pojo.User">
-    insert into user (id, username, `password`, 
-      profile_img, is_star)
-    values (#{id,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{profileImg,jdbcType=VARCHAR}, #{isStar,jdbcType=INTEGER})
+  <insert id="insert" parameterType="com.ziyuan.pojo.Tweet">
+    insert into tweet (id, userId, content, 
+      attached_img, deleted_at, created_at
+      )
+    values (#{id,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{attachedImg,jdbcType=VARCHAR}, #{deletedAt,jdbcType=INTEGER}, #{createdAt,jdbcType=TIMESTAMP}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.ziyuan.pojo.User">
-    insert into user
+  <insert id="insertSelective" parameterType="com.ziyuan.pojo.Tweet">
+    insert into tweet
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
       </if>
-      <if test="username != null">
-        username,
+      <if test="userid != null">
+        userId,
       </if>
-      <if test="password != null">
-        `password`,
+      <if test="content != null">
+        content,
       </if>
-      <if test="profileImg != null">
-        profile_img,
+      <if test="attachedImg != null">
+        attached_img,
       </if>
-      <if test="isStar != null">
-        is_star,
+      <if test="deletedAt != null">
+        deleted_at,
+      </if>
+      <if test="createdAt != null">
+        created_at,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=VARCHAR},
       </if>
-      <if test="username != null">
-        #{username,jdbcType=VARCHAR},
+      <if test="userid != null">
+        #{userid,jdbcType=VARCHAR},
       </if>
-      <if test="password != null">
-        #{password,jdbcType=VARCHAR},
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
       </if>
-      <if test="profileImg != null">
-        #{profileImg,jdbcType=VARCHAR},
+      <if test="attachedImg != null">
+        #{attachedImg,jdbcType=VARCHAR},
       </if>
-      <if test="isStar != null">
-        #{isStar,jdbcType=INTEGER},
+      <if test="deletedAt != null">
+        #{deletedAt,jdbcType=INTEGER},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.ziyuan.pojo.UserExample" resultType="java.lang.Long">
-    select count(*) from user
+  <select id="countByExample" parameterType="com.ziyuan.pojo.TweetExample" resultType="java.lang.Long">
+    select count(*) from tweet
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update user
+    update tweet
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=VARCHAR},
       </if>
-      <if test="record.username != null">
-        username = #{record.username,jdbcType=VARCHAR},
+      <if test="record.userid != null">
+        userId = #{record.userid,jdbcType=VARCHAR},
       </if>
-      <if test="record.password != null">
-        `password` = #{record.password,jdbcType=VARCHAR},
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=VARCHAR},
       </if>
-      <if test="record.profileImg != null">
-        profile_img = #{record.profileImg,jdbcType=VARCHAR},
+      <if test="record.attachedImg != null">
+        attached_img = #{record.attachedImg,jdbcType=VARCHAR},
       </if>
-      <if test="record.isStar != null">
-        is_star = #{record.isStar,jdbcType=INTEGER},
+      <if test="record.deletedAt != null">
+        deleted_at = #{record.deletedAt,jdbcType=INTEGER},
+      </if>
+      <if test="record.createdAt != null">
+        created_at = #{record.createdAt,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null">
@@ -172,40 +184,45 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update user
+    update tweet
     set id = #{record.id,jdbcType=VARCHAR},
-      username = #{record.username,jdbcType=VARCHAR},
-      `password` = #{record.password,jdbcType=VARCHAR},
-      profile_img = #{record.profileImg,jdbcType=VARCHAR},
-      is_star = #{record.isStar,jdbcType=INTEGER}
+      userId = #{record.userid,jdbcType=VARCHAR},
+      content = #{record.content,jdbcType=VARCHAR},
+      attached_img = #{record.attachedImg,jdbcType=VARCHAR},
+      deleted_at = #{record.deletedAt,jdbcType=INTEGER},
+      created_at = #{record.createdAt,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ziyuan.pojo.User">
-    update user
+  <update id="updateByPrimaryKeySelective" parameterType="com.ziyuan.pojo.Tweet">
+    update tweet
     <set>
-      <if test="username != null">
-        username = #{username,jdbcType=VARCHAR},
+      <if test="userid != null">
+        userId = #{userid,jdbcType=VARCHAR},
       </if>
-      <if test="password != null">
-        `password` = #{password,jdbcType=VARCHAR},
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
       </if>
-      <if test="profileImg != null">
-        profile_img = #{profileImg,jdbcType=VARCHAR},
+      <if test="attachedImg != null">
+        attached_img = #{attachedImg,jdbcType=VARCHAR},
       </if>
-      <if test="isStar != null">
-        is_star = #{isStar,jdbcType=INTEGER},
+      <if test="deletedAt != null">
+        deleted_at = #{deletedAt,jdbcType=INTEGER},
+      </if>
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.ziyuan.pojo.User">
-    update user
-    set username = #{username,jdbcType=VARCHAR},
-      `password` = #{password,jdbcType=VARCHAR},
-      profile_img = #{profileImg,jdbcType=VARCHAR},
-      is_star = #{isStar,jdbcType=INTEGER}
+  <update id="updateByPrimaryKey" parameterType="com.ziyuan.pojo.Tweet">
+    update tweet
+    set userId = #{userid,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      attached_img = #{attachedImg,jdbcType=VARCHAR},
+      deleted_at = #{deletedAt,jdbcType=INTEGER},
+      created_at = #{createdAt,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

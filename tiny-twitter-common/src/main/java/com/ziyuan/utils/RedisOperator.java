@@ -222,4 +222,59 @@ public class RedisOperator {
         return redisTemplate.opsForList().rightPush(key, value);
     }
 
+    /**
+     * add a value to the set
+     *
+     * @param key
+     * @param value
+     * @return
+     */
+    public long sadd(String key, String value) {
+        return redisTemplate.opsForSet().add(key, value);
+    }
+
+    /**
+     * delete key-value from the set
+     *
+     * @param key
+     * @return
+     */
+    public long sdel(String key, String value) {
+        return redisTemplate.opsForSet().remove(key, value);
+    }
+
+    /**
+     * get size of the set
+     *
+     * @param key
+     * @return
+     */
+    public long scard(String key) {
+        return redisTemplate.opsForSet().size(key);
+    }
+
+    /**
+     * get values of the zset in a range
+     *
+     * @param key, start, end
+     * @return
+     */
+    public Set<String> zrange(String key, long start, long end) {
+        return redisTemplate.opsForZSet().range(key, start, end);
+    }
+
+    /**
+     * add a value to the zset
+     */
+    public boolean zadd(String key, double score, String value) {
+        return redisTemplate.opsForZSet().add(key, value, score);
+    }
+
+
+    /**
+     * remove range of values from the zset
+     */
+    public long zremrangeByRank(String key, long start, long end) {
+        return redisTemplate.opsForZSet().removeRange(key, start, end);
+    }
 }

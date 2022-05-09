@@ -5,7 +5,7 @@ import java.util.Date;
 public class Tweet {
     private String id;
 
-    private String userid;
+    private String userId;
 
     private String content;
 
@@ -23,12 +23,12 @@ public class Tweet {
         this.id = id;
     }
 
-    public String getUserid() {
-        return userid;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUserid(String userid) {
-        this.userid = userid;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getContent() {
@@ -70,7 +70,7 @@ public class Tweet {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", userid=").append(userid);
+        sb.append(", userId=").append(userId);
         sb.append(", content=").append(content);
         sb.append(", attachedImg=").append(attachedImg);
         sb.append(", deletedAt=").append(deletedAt);

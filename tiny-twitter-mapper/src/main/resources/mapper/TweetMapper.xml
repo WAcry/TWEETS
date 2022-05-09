@@ -3,7 +3,7 @@
 <mapper namespace="com.ziyuan.mapper.TweetMapper">
   <resultMap id="BaseResultMap" type="com.ziyuan.pojo.Tweet">
     <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="userId" jdbcType="VARCHAR" property="userid" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
     <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="attached_img" jdbcType="VARCHAR" property="attachedImg" />
     <result column="deleted_at" jdbcType="INTEGER" property="deletedAt" />
@@ -68,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, userId, content, attached_img, deleted_at, created_at
+    id, user_id, content, attached_img, deleted_at, created_at
   </sql>
   <select id="selectByExample" parameterType="com.ziyuan.pojo.TweetExample" resultMap="BaseResultMap">
     select
@@ -101,10 +101,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.ziyuan.pojo.Tweet">
-    insert into tweet (id, userId, content, 
+    insert into tweet (id, user_id, content, 
       attached_img, deleted_at, created_at
       )
-    values (#{id,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
       #{attachedImg,jdbcType=VARCHAR}, #{deletedAt,jdbcType=INTEGER}, #{createdAt,jdbcType=TIMESTAMP}
       )
   </insert>
@@ -114,8 +114,8 @@
       <if test="id != null">
         id,
       </if>
-      <if test="userid != null">
-        userId,
+      <if test="userId != null">
+        user_id,
       </if>
       <if test="content != null">
         content,
@@ -134,8 +134,8 @@
       <if test="id != null">
         #{id,jdbcType=VARCHAR},
       </if>
-      <if test="userid != null">
-        #{userid,jdbcType=VARCHAR},
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
       </if>
       <if test="content != null">
         #{content,jdbcType=VARCHAR},
@@ -163,8 +163,8 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=VARCHAR},
       </if>
-      <if test="record.userid != null">
-        userId = #{record.userid,jdbcType=VARCHAR},
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=VARCHAR},
       </if>
       <if test="record.content != null">
         content = #{record.content,jdbcType=VARCHAR},
@@ -186,7 +186,7 @@
   <update id="updateByExample" parameterType="map">
     update tweet
     set id = #{record.id,jdbcType=VARCHAR},
-      userId = #{record.userid,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=VARCHAR},
       content = #{record.content,jdbcType=VARCHAR},
       attached_img = #{record.attachedImg,jdbcType=VARCHAR},
       deleted_at = #{record.deletedAt,jdbcType=INTEGER},
@@ -198,8 +198,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.ziyuan.pojo.Tweet">
     update tweet
     <set>
-      <if test="userid != null">
-        userId = #{userid,jdbcType=VARCHAR},
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
       </if>
       <if test="content != null">
         content = #{content,jdbcType=VARCHAR},
@@ -218,7 +218,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.ziyuan.pojo.Tweet">
     update tweet
-    set userId = #{userid,jdbcType=VARCHAR},
+    set user_id = #{userId,jdbcType=VARCHAR},
       content = #{content,jdbcType=VARCHAR},
       attached_img = #{attachedImg,jdbcType=VARCHAR},
       deleted_at = #{deletedAt,jdbcType=INTEGER},

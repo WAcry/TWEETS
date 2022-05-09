@@ -3,11 +3,9 @@ package com.ziyuan.mapper;
 import com.ziyuan.pojo.Tweet;
 import com.ziyuan.pojo.TweetExample;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
 public interface TweetMapper {
     long countByExample(TweetExample example);
 

@@ -7,10 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserBO {
+public class TweetBO {
     private String token;
     private String userId;
-    private String username;
-    private String password;
-    private String profileImg;
+    private String tweetId;
+    private String content;
+    private String attachedImg;
 }

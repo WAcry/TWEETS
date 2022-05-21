@@ -3,10 +3,9 @@ package com.ziyuan.mapper;
 import com.ziyuan.pojo.User;
 import com.ziyuan.pojo.UserExample;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
-@Repository
+
 public interface UserMapper {
     long countByExample(UserExample example);
 

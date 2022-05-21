@@ -385,63 +385,63 @@ public class TweetExample {
             return (Criteria) this;
         }
 
-        public Criteria andDeletedAtIsNull() {
-            addCriterion("deleted_at is null");
+        public Criteria andStatusIsNull() {
+            addCriterion("`status` is null");
             return (Criteria) this;
         }
 
-        public Criteria andDeletedAtIsNotNull() {
-            addCriterion("deleted_at is not null");
+        public Criteria andStatusIsNotNull() {
+            addCriterion("`status` is not null");
             return (Criteria) this;
         }
 
-        public Criteria andDeletedAtEqualTo(Integer value) {
-            addCriterion("deleted_at =", value, "deletedAt");
+        public Criteria andStatusEqualTo(Integer value) {
+            addCriterion("`status` =", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andDeletedAtNotEqualTo(Integer value) {
-            addCriterion("deleted_at <>", value, "deletedAt");
+        public Criteria andStatusNotEqualTo(Integer value) {
+            addCriterion("`status` <>", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andDeletedAtGreaterThan(Integer value) {
-            addCriterion("deleted_at >", value, "deletedAt");
+        public Criteria andStatusGreaterThan(Integer value) {
+            addCriterion("`status` >", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andDeletedAtGreaterThanOrEqualTo(Integer value) {
-            addCriterion("deleted_at >=", value, "deletedAt");
+        public Criteria andStatusGreaterThanOrEqualTo(Integer value) {
+            addCriterion("`status` >=", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andDeletedAtLessThan(Integer value) {
-            addCriterion("deleted_at <", value, "deletedAt");
+        public Criteria andStatusLessThan(Integer value) {
+            addCriterion("`status` <", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andDeletedAtLessThanOrEqualTo(Integer value) {
-            addCriterion("deleted_at <=", value, "deletedAt");
+        public Criteria andStatusLessThanOrEqualTo(Integer value) {
+            addCriterion("`status` <=", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andDeletedAtIn(List<Integer> values) {
-            addCriterion("deleted_at in", values, "deletedAt");
+        public Criteria andStatusIn(List<Integer> values) {
+            addCriterion("`status` in", values, "status");
             return (Criteria) this;
         }
 
-        public Criteria andDeletedAtNotIn(List<Integer> values) {
-            addCriterion("deleted_at not in", values, "deletedAt");
+        public Criteria andStatusNotIn(List<Integer> values) {
+            addCriterion("`status` not in", values, "status");
             return (Criteria) this;
         }
 
-        public Criteria andDeletedAtBetween(Integer value1, Integer value2) {
-            addCriterion("deleted_at between", value1, value2, "deletedAt");
+        public Criteria andStatusBetween(Integer value1, Integer value2) {
+            addCriterion("`status` between", value1, value2, "status");
             return (Criteria) this;
         }
 
-        public Criteria andDeletedAtNotBetween(Integer value1, Integer value2) {
-            addCriterion("deleted_at not between", value1, value2, "deletedAt");
+        public Criteria andStatusNotBetween(Integer value1, Integer value2) {
+            addCriterion("`status` not between", value1, value2, "status");
             return (Criteria) this;
         }
 

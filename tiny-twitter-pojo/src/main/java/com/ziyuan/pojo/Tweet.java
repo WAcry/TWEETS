@@ -11,7 +11,7 @@ public class Tweet {
 
     private String attachedImg;
 
-    private Integer deletedAt;
+    private Integer status;
 
     private Date createdAt;
 
@@ -47,12 +47,12 @@ public class Tweet {
         this.attachedImg = attachedImg;
     }
 
-    public Integer getDeletedAt() {
-        return deletedAt;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setDeletedAt(Integer deletedAt) {
-        this.deletedAt = deletedAt;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public Date getCreatedAt() {
@@ -73,7 +73,7 @@ public class Tweet {
         sb.append(", userId=").append(userId);
         sb.append(", content=").append(content);
         sb.append(", attachedImg=").append(attachedImg);
-        sb.append(", deletedAt=").append(deletedAt);
+        sb.append(", status=").append(status);
         sb.append(", createdAt=").append(createdAt);
         sb.append("]");
         return sb.toString();

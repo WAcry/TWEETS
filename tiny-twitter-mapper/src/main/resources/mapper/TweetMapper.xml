@@ -6,7 +6,7 @@
     <result column="user_id" jdbcType="VARCHAR" property="userId" />
     <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="attached_img" jdbcType="VARCHAR" property="attachedImg" />
-    <result column="deleted_at" jdbcType="INTEGER" property="deletedAt" />
+    <result column="status" jdbcType="INTEGER" property="status" />
     <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -68,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_id, content, attached_img, deleted_at, created_at
+    id, user_id, content, attached_img, `status`, created_at
   </sql>
   <select id="selectByExample" parameterType="com.ziyuan.pojo.TweetExample" resultMap="BaseResultMap">
     select
@@ -102,10 +102,10 @@
   </delete>
   <insert id="insert" parameterType="com.ziyuan.pojo.Tweet">
     insert into tweet (id, user_id, content, 
-      attached_img, deleted_at, created_at
+      attached_img, `status`, created_at
       )
     values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
-      #{attachedImg,jdbcType=VARCHAR}, #{deletedAt,jdbcType=INTEGER}, #{createdAt,jdbcType=TIMESTAMP}
+      #{attachedImg,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{createdAt,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.ziyuan.pojo.Tweet">
@@ -123,8 +123,8 @@
       <if test="attachedImg != null">
         attached_img,
       </if>
-      <if test="deletedAt != null">
-        deleted_at,
+      <if test="status != null">
+        `status`,
       </if>
       <if test="createdAt != null">
         created_at,
@@ -143,8 +143,8 @@
       <if test="attachedImg != null">
         #{attachedImg,jdbcType=VARCHAR},
       </if>
-      <if test="deletedAt != null">
-        #{deletedAt,jdbcType=INTEGER},
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
       </if>
       <if test="createdAt != null">
         #{createdAt,jdbcType=TIMESTAMP},
@@ -172,8 +172,8 @@
       <if test="record.attachedImg != null">
         attached_img = #{record.attachedImg,jdbcType=VARCHAR},
       </if>
-      <if test="record.deletedAt != null">
-        deleted_at = #{record.deletedAt,jdbcType=INTEGER},
+      <if test="record.status != null">
+        `status` = #{record.status,jdbcType=INTEGER},
       </if>
       <if test="record.createdAt != null">
         created_at = #{record.createdAt,jdbcType=TIMESTAMP},
@@ -189,7 +189,7 @@
       user_id = #{record.userId,jdbcType=VARCHAR},
       content = #{record.content,jdbcType=VARCHAR},
       attached_img = #{record.attachedImg,jdbcType=VARCHAR},
-      deleted_at = #{record.deletedAt,jdbcType=INTEGER},
+      `status` = #{record.status,jdbcType=INTEGER},
       created_at = #{record.createdAt,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -207,8 +207,8 @@
       <if test="attachedImg != null">
         attached_img = #{attachedImg,jdbcType=VARCHAR},
       </if>
-      <if test="deletedAt != null">
-        deleted_at = #{deletedAt,jdbcType=INTEGER},
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
       </if>
       <if test="createdAt != null">
         created_at = #{createdAt,jdbcType=TIMESTAMP},
@@ -221,7 +221,7 @@
     set user_id = #{userId,jdbcType=VARCHAR},
       content = #{content,jdbcType=VARCHAR},
       attached_img = #{attachedImg,jdbcType=VARCHAR},
-      deleted_at = #{deletedAt,jdbcType=INTEGER},
+      `status` = #{status,jdbcType=INTEGER},
       created_at = #{createdAt,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>

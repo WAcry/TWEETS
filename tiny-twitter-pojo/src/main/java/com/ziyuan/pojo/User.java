@@ -9,7 +9,7 @@ public class User {
 
     private String profileImg;
 
-    private Integer isStar;
+    private Integer status;
 
     public String getId() {
         return id;
@@ -43,12 +43,12 @@ public class User {
         this.profileImg = profileImg;
     }
 
-    public Integer getIsStar() {
-        return isStar;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setIsStar(Integer isStar) {
-        this.isStar = isStar;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     @Override
@@ -61,7 +61,7 @@ public class User {
         sb.append(", username=").append(username);
         sb.append(", password=").append(password);
         sb.append(", profileImg=").append(profileImg);
-        sb.append(", isStar=").append(isStar);
+        sb.append(", status=").append(status);
         sb.append("]");
         return sb.toString();
     }

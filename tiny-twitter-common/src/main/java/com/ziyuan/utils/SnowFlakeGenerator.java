@@ -3,6 +3,7 @@ package com.ziyuan.utils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.math.BigInteger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -114,7 +115,14 @@ public class SnowFlakeGenerator {
                 | machineId << MACHINE_LEFT             // machine id
                 | sequence;                             // sequence
 
-        return String.valueOf((currStmp - START_STAMP));
+        String sidStr = new BigInteger(String.valueOf(sid)).toString(36);
+
+        return sidStr;
+    }
+
+    public long sidToLong(String sid) {
+        BigInteger sidStr = new BigInteger(sid, 36);
+        return sidStr.longValue();
     }
 
     /**

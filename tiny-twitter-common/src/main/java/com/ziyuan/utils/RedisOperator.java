@@ -253,6 +253,10 @@ public class RedisOperator {
         return redisTemplate.opsForSet().size(key);
     }
 
+    public boolean scontains(String key, String obj) {
+        return redisTemplate.opsForSet().isMember(key, obj);
+    }
+
     /**
      * get values of the zset in a range
      *

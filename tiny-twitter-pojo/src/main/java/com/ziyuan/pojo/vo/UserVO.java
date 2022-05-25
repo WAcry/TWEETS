@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserVO {
-    private String userId;
+    private String id;
     private String username;
     private String profileImg;
 }

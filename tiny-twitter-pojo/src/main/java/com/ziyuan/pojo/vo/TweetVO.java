@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TweetVO {
     private UserVO user;
-    private String tweetId;
+    private String id;
     private String content;
     private String attachedImg;
     private String likeCount;

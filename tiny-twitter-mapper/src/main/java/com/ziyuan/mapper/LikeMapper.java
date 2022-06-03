@@ -6,14 +6,13 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
 @Repository
 public interface LikeMapper {
     long countByExample(LikeExample example);
 
     int deleteByExample(LikeExample example);
 
-    int deleteByPrimaryKey(String id);
+    int deleteByPrimaryKey(String likeId);
 
     int insert(Like record);
 
@@ -21,7 +20,7 @@ public interface LikeMapper {
 
     List<Like> selectByExample(LikeExample example);
 
-    Like selectByPrimaryKey(String id);
+    Like selectByPrimaryKey(String likeId);
 
     int updateByExampleSelective(@Param("record") Like record, @Param("example") LikeExample example);
 

@@ -3,15 +3,17 @@ package com.ziyuan.mapper;
 import com.ziyuan.pojo.Tweet;
 import com.ziyuan.pojo.TweetExample;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface TweetMapper {
     long countByExample(TweetExample example);
 
     int deleteByExample(TweetExample example);
 
-    int deleteByPrimaryKey(String id);
+    int deleteByPrimaryKey(String tweetId);
 
     int insert(Tweet record);
 
@@ -19,7 +21,7 @@ public interface TweetMapper {
 
     List<Tweet> selectByExample(TweetExample example);
 
-    Tweet selectByPrimaryKey(String id);
+    Tweet selectByPrimaryKey(String tweetId);
 
     int updateByExampleSelective(@Param("record") Tweet record, @Param("example") TweetExample example);
 

@@ -6,14 +6,13 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
 @Repository
 public interface InboxMsgMapper {
     long countByExample(InboxMsgExample example);
 
     int deleteByExample(InboxMsgExample example);
 
-    int deleteByPrimaryKey(String id);
+    int deleteByPrimaryKey(String inboxMsgId);
 
     int insert(InboxMsg record);
 
@@ -21,7 +20,7 @@ public interface InboxMsgMapper {
 
     List<InboxMsg> selectByExample(InboxMsgExample example);
 
-    InboxMsg selectByPrimaryKey(String id);
+    InboxMsg selectByPrimaryKey(String inboxMsgId);
 
     int updateByExampleSelective(@Param("record") InboxMsg record, @Param("example") InboxMsgExample example);
 

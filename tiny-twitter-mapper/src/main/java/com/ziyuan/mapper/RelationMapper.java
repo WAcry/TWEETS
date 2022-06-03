@@ -6,14 +6,13 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
 @Repository
 public interface RelationMapper {
     long countByExample(RelationExample example);
 
     int deleteByExample(RelationExample example);
 
-    int deleteByPrimaryKey(String id);
+    int deleteByPrimaryKey(String relationId);
 
     int insert(Relation record);
 
@@ -21,7 +20,7 @@ public interface RelationMapper {
 
     List<Relation> selectByExample(RelationExample example);
 
-    Relation selectByPrimaryKey(String id);
+    Relation selectByPrimaryKey(String relationId);
 
     int updateByExampleSelective(@Param("record") Relation record, @Param("example") RelationExample example);
 

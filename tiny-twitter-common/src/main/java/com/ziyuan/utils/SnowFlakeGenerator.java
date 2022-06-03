@@ -1,5 +1,6 @@
 package com.ziyuan.utils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +14,7 @@ import java.util.UUID;
  * Snowflake ID generator
  **/
 @Component
+@Slf4j
 public class SnowFlakeGenerator {
 
     /**
@@ -66,10 +68,17 @@ public class SnowFlakeGenerator {
         this.machineId = machineId;
     }
 
+    public final static String SID_MAX = "zzzzzzzz";
+    public final static String SID_MIN = "00000000";
+
     public static void main(String[] args) throws ParseException {
+        SEQUENCE_BIT = 10;
+        MACHINE_BIT = 5;
+        DATACENTER_BIT = 5;
+
         System.out.println(System.currentTimeMillis());
         System.out.println(new Date().getTime());
-        String dateTime = "2022-01-01 00:00:00";
+        String dateTime = "2021-01-01 00:00:00";
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         System.out.println(sdf.parse(dateTime).getTime());
 
@@ -86,7 +95,7 @@ public class SnowFlakeGenerator {
     }
 
     /**
-     * next snowflake id
+     * next snowflake id has length of 8
      *
      * @return
      */
@@ -116,13 +125,15 @@ public class SnowFlakeGenerator {
                 | sequence;                             // sequence
 
         String sidStr = new BigInteger(String.valueOf(sid)).toString(36);
+        while (sidStr.length() < 8) {
+            sidStr = "0" + sidStr;
+        }
 
+        if (sidStr.length() > 8) {
+            logger.error("sidStr length is greater than 8");
+            return null;
+        }
         return sidStr;
-    }
-
-    public long sidToLong(String sid) {
-        BigInteger sidStr = new BigInteger(sid, 36);
-        return sidStr.longValue();
     }
 
     /**

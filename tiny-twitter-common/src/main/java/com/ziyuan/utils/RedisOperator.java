@@ -3,6 +3,7 @@ package com.ziyuan.utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.connection.RedisZSetCommands;
 import org.springframework.data.redis.connection.StringRedisConnection;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -234,12 +235,25 @@ public class RedisOperator {
     }
 
     /**
+     * add a value to the set with tll
+     *
+     * @param key
+     * @param value
+     * @return
+     */
+    public long sadd(String key, String value, long timeout) {
+        redisTemplate.opsForSet().add(key, value);
+        redisTemplate.expire(key, timeout, TimeUnit.SECONDS);
+        return redisTemplate.opsForSet().size(key);
+    }
+
+    /**
      * delete key-value from the set
      *
      * @param key
      * @return
      */
-    public long sdel(String key, String value) {
+    public long srem(String key, String value) {
         return redisTemplate.opsForSet().remove(key, value);
     }
 
@@ -253,8 +267,24 @@ public class RedisOperator {
         return redisTemplate.opsForSet().size(key);
     }
 
-    public boolean scontains(String key, String obj) {
+    /**
+     * if obj contain in set key
+     *
+     * @param key
+     * @return
+     */
+    public boolean sismember(String key, String obj) {
         return redisTemplate.opsForSet().isMember(key, obj);
+    }
+
+    /**
+     * return all member in set key
+     *
+     * @param key
+     * @return
+     */
+    public Set<String> smembers(String key) {
+        return redisTemplate.opsForSet().members(key);
     }
 
     /**
@@ -268,10 +298,70 @@ public class RedisOperator {
     }
 
     /**
+     * zrevrange values of the zset in a range
+     */
+    public Set<String> zrevrange(String key, long start, long end) {
+        return redisTemplate.opsForZSet().reverseRange(key, start, end);
+    }
+
+    /**
      * add a value to the zset
      */
     public boolean zadd(String key, double score, String value) {
         return redisTemplate.opsForZSet().add(key, value, score);
+    }
+
+    /**
+     * Zrangebylex, [min, max)
+     */
+    public Set<String> zrangebylex(String key, String min, String max) {
+        RedisZSetCommands.Range range = new RedisZSetCommands.Range();
+        range.lt(max);
+        range.gte(min);
+        return redisTemplate.opsForZSet().rangeByLex(key, range);
+    }
+
+    /**
+     * zrevrangebylex [min, max)
+     */
+    public Set<String> zrevrangebylex(String key, String min, String max) {
+        RedisZSetCommands.Range range = new RedisZSetCommands.Range();
+        range.lt(max);
+        range.gte(min);
+        return redisTemplate.opsForZSet().reverseRangeByLex(key, range);
+    }
+
+    /**
+     * zrevrangebylex [min, max) with offset and count
+     */
+    public Set<String> zrevrangebylex(String key, String min, String max, int offset, int count) {
+        RedisZSetCommands.Range range = new RedisZSetCommands.Range();
+        range.lt(max);
+        range.gte(min);
+        RedisZSetCommands.Limit limit = new RedisZSetCommands.Limit();
+        limit.count(count);
+        limit.offset(offset);
+        return redisTemplate.opsForZSet().reverseRangeByLex(key, range, limit);
+    }
+
+    /**
+     * Zrangebylex  with limit, [min, max)
+     */
+    public Set<String> zrangebylex(String key, String min, String max, int offset, int count) {
+        RedisZSetCommands.Range range = new RedisZSetCommands.Range();
+        range.lt(max);
+        range.gte(min);
+        RedisZSetCommands.Limit limit = new RedisZSetCommands.Limit();
+        limit.count(count);
+        limit.offset(offset);
+        return redisTemplate.opsForZSet().rangeByLex(key, range, limit);
+    }
+
+    /**
+     * zrank
+     */
+    public Long zrank(String key, String value) {
+        return redisTemplate.opsForZSet().rank(key, value);
     }
 
 
@@ -281,4 +371,33 @@ public class RedisOperator {
     public long zremrangeByRank(String key, long start, long end) {
         return redisTemplate.opsForZSet().removeRange(key, start, end);
     }
+
+    /**
+     * zset size
+     */
+    public long zcard(String key) {
+        return redisTemplate.opsForZSet().size(key);
+    }
+
+
+    /**
+     * remove key-obj in zset
+     *
+     * @param key
+     * @param obj
+     * @return
+     */
+    public long zrem(String key, String obj) {
+        return redisTemplate.opsForZSet().remove(key, obj);
+    }
+
+    // zremrangebyrank
+
+    /**
+     * remove range of values from the zset by Rank
+     */
+    public long zremrangebyrank(String key, long start, long end) {
+        return redisTemplate.opsForZSet().removeRange(key, start, end);
+    }
+
 }

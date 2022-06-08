@@ -1,196 +1,200 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ziyuan.mapper.InboxMsgMapper">
-  <resultMap id="BaseResultMap" type="com.ziyuan.pojo.InboxMsg">
-    <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="from_user_id" jdbcType="VARCHAR" property="fromUserId" />
-    <result column="to_user_id" jdbcType="VARCHAR" property="toUserId" />
-    <result column="tweet_id" jdbcType="VARCHAR" property="tweetId" />
-  </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
+    <resultMap id="BaseResultMap" type="com.ziyuan.pojo.InboxMsg">
+        <id column="inbox_msg_id" jdbcType="VARCHAR" property="inboxMsgId"/>
+        <result column="from_user_id" jdbcType="VARCHAR" property="fromUserId"/>
+        <result column="to_user_id" jdbcType="VARCHAR" property="toUserId"/>
+        <result column="tweet_id" jdbcType="VARCHAR" property="tweetId"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
             </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
             </foreach>
-          </trim>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        inbox_msg_id
+        , from_user_id, to_user_id, tweet_id
+    </sql>
+    <select id="selectByExample" parameterType="com.ziyuan.pojo.InboxMsgExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
         </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List">
-    id, from_user_id, to_user_id, tweet_id
-  </sql>
-  <select id="selectByExample" parameterType="com.ziyuan.pojo.InboxMsgExample" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from inbox_msg
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from inbox_msg
-    where id = #{id,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from inbox_msg
-    where id = #{id,jdbcType=VARCHAR}
-  </delete>
-  <delete id="deleteByExample" parameterType="com.ziyuan.pojo.InboxMsgExample">
-    delete from inbox_msg
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="com.ziyuan.pojo.InboxMsg">
-    insert into inbox_msg (id, from_user_id, to_user_id, 
-      tweet_id)
-    values (#{id,jdbcType=VARCHAR}, #{fromUserId,jdbcType=VARCHAR}, #{toUserId,jdbcType=VARCHAR}, 
-      #{tweetId,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.ziyuan.pojo.InboxMsg">
-    insert into inbox_msg
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="fromUserId != null">
-        from_user_id,
-      </if>
-      <if test="toUserId != null">
-        to_user_id,
-      </if>
-      <if test="tweetId != null">
-        tweet_id,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=VARCHAR},
-      </if>
-      <if test="fromUserId != null">
-        #{fromUserId,jdbcType=VARCHAR},
-      </if>
-      <if test="toUserId != null">
-        #{toUserId,jdbcType=VARCHAR},
-      </if>
-      <if test="tweetId != null">
-        #{tweetId,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="com.ziyuan.pojo.InboxMsgExample" resultType="java.lang.Long">
-    select count(*) from inbox_msg
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map">
-    update inbox_msg
-    <set>
-      <if test="record.id != null">
-        id = #{record.id,jdbcType=VARCHAR},
-      </if>
-      <if test="record.fromUserId != null">
+        <include refid="Base_Column_List"/>
+        from inbox_msg
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from inbox_msg
+        where inbox_msg_id = #{inboxMsgId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete
+        from inbox_msg
+        where inbox_msg_id = #{inboxMsgId,jdbcType=VARCHAR}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.ziyuan.pojo.InboxMsgExample">
+        delete from inbox_msg
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.ziyuan.pojo.InboxMsg">
+        insert into inbox_msg (inbox_msg_id, from_user_id, to_user_id,
+                               tweet_id)
+        values (#{inboxMsgId,jdbcType=VARCHAR}, #{fromUserId,jdbcType=VARCHAR}, #{toUserId,jdbcType=VARCHAR},
+                #{tweetId,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.ziyuan.pojo.InboxMsg">
+        insert into inbox_msg
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="inboxMsgId != null">
+                inbox_msg_id,
+            </if>
+            <if test="fromUserId != null">
+                from_user_id,
+            </if>
+            <if test="toUserId != null">
+                to_user_id,
+            </if>
+            <if test="tweetId != null">
+                tweet_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="inboxMsgId != null">
+                #{inboxMsgId,jdbcType=VARCHAR},
+            </if>
+            <if test="fromUserId != null">
+                #{fromUserId,jdbcType=VARCHAR},
+            </if>
+            <if test="toUserId != null">
+                #{toUserId,jdbcType=VARCHAR},
+            </if>
+            <if test="tweetId != null">
+                #{tweetId,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.ziyuan.pojo.InboxMsgExample" resultType="java.lang.Long">
+        select count(*) from inbox_msg
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update inbox_msg
+        <set>
+            <if test="record.inboxMsgId != null">
+                inbox_msg_id = #{record.inboxMsgId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.fromUserId != null">
+                from_user_id = #{record.fromUserId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.toUserId != null">
+                to_user_id = #{record.toUserId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.tweetId != null">
+                tweet_id = #{record.tweetId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update inbox_msg
+        set inbox_msg_id = #{record.inboxMsgId,jdbcType=VARCHAR},
         from_user_id = #{record.fromUserId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.toUserId != null">
         to_user_id = #{record.toUserId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.tweetId != null">
-        tweet_id = #{record.tweetId,jdbcType=VARCHAR},
-      </if>
-    </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    update inbox_msg
-    set id = #{record.id,jdbcType=VARCHAR},
-      from_user_id = #{record.fromUserId,jdbcType=VARCHAR},
-      to_user_id = #{record.toUserId,jdbcType=VARCHAR},
-      tweet_id = #{record.tweetId,jdbcType=VARCHAR}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ziyuan.pojo.InboxMsg">
-    update inbox_msg
-    <set>
-      <if test="fromUserId != null">
-        from_user_id = #{fromUserId,jdbcType=VARCHAR},
-      </if>
-      <if test="toUserId != null">
-        to_user_id = #{toUserId,jdbcType=VARCHAR},
-      </if>
-      <if test="tweetId != null">
-        tweet_id = #{tweetId,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.ziyuan.pojo.InboxMsg">
-    update inbox_msg
-    set from_user_id = #{fromUserId,jdbcType=VARCHAR},
-      to_user_id = #{toUserId,jdbcType=VARCHAR},
-      tweet_id = #{tweetId,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
+        tweet_id = #{record.tweetId,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ziyuan.pojo.InboxMsg">
+        update inbox_msg
+        <set>
+            <if test="fromUserId != null">
+                from_user_id = #{fromUserId,jdbcType=VARCHAR},
+            </if>
+            <if test="toUserId != null">
+                to_user_id = #{toUserId,jdbcType=VARCHAR},
+            </if>
+            <if test="tweetId != null">
+                tweet_id = #{tweetId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where inbox_msg_id = #{inboxMsgId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ziyuan.pojo.InboxMsg">
+        update inbox_msg
+        set from_user_id = #{fromUserId,jdbcType=VARCHAR},
+            to_user_id   = #{toUserId,jdbcType=VARCHAR},
+            tweet_id     = #{tweetId,jdbcType=VARCHAR}
+        where inbox_msg_id = #{inboxMsgId,jdbcType=VARCHAR}
+    </update>
 </mapper>

@@ -227,11 +227,11 @@ public class RedisOperator {
      * add a value to the set
      *
      * @param key
-     * @param value
+     * @param values
      * @return
      */
-    public long sadd(String key, String value) {
-        return redisTemplate.opsForSet().add(key, value);
+    public long sadd(String key, String... values) {
+        return redisTemplate.opsForSet().add(key, values);
     }
 
     /**
@@ -387,7 +387,7 @@ public class RedisOperator {
      * @param obj
      * @return
      */
-    public long zrem(String key, String obj) {
+    public long zrem(String key, String... obj) {
         return redisTemplate.opsForZSet().remove(key, obj);
     }
 

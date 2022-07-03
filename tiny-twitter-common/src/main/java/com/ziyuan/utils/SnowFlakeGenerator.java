@@ -20,27 +20,26 @@ public class SnowFlakeGenerator {
     /**
      * time start
      */
-    private final static long START_STAMP = 1641013200000L; // 2022-01-01 00:00:00
+    private final long START_STAMP = 1641013200000L; // 2022-01-01 00:00:00
 
     /**
      * bits of each part
      * seq_bit + mac_bit + dat_bit + timestamp_bit_diff(=40) < 63 bit (2^63 - 1 = LONG_MAX)
      */
     @Value("${snowflake.sequenceBit}")
-    private static long SEQUENCE_BIT; // bits of sequence
-    @Value("${snowflake.machineBit}")
-    private static long MACHINE_BIT;   // bits of machine
-    @Value("${snowflake.datacenterBit}")
-    private static long DATACENTER_BIT;// bits of datacenter
-
-    private final long MAX_SEQUENCE = ~(-1L << SEQUENCE_BIT);
-
+    private long SEQUENCE_BIT; // bits of sequence
     /**
      * shift of each part
      */
-    private final static long MACHINE_LEFT = SEQUENCE_BIT;
-    private final static long DATACENTER_LEFT = SEQUENCE_BIT + MACHINE_BIT;
-    private final static long TIMESTAMP_LEFT = DATACENTER_LEFT + DATACENTER_BIT;
+    private final long MACHINE_LEFT = SEQUENCE_BIT;
+    @Value("${snowflake.machineBit}")
+    private long MACHINE_BIT;   // bits of machine
+
+    private final long MAX_SEQUENCE = ~(-1L << SEQUENCE_BIT);
+    private final long DATACENTER_LEFT = SEQUENCE_BIT + MACHINE_BIT;
+    @Value("${snowflake.datacenterBit}")
+    private long DATACENTER_BIT;// bits of datacenter
+    private final long TIMESTAMP_LEFT = DATACENTER_LEFT + DATACENTER_BIT;
 
     @Value("${snowflake.datacenterId}")
     private long datacenterId;  // datacenter id
@@ -49,7 +48,20 @@ public class SnowFlakeGenerator {
     private long sequence = 0L; // init seq number
     private long lastStmp = -1L;// last timestamp
 
-    public SnowFlakeGenerator() {
+    public final static String SID_MAX = "zzzzzzzz";
+    public final static String SID_MIN = "00000000";
+
+
+    private SnowFlakeGenerator() {
+    }
+
+    /**
+     * next UUID
+     *
+     * @return
+     */
+    public synchronized String nextUUID() {
+        return UUID.randomUUID().toString().replaceAll("-", "");
     }
 
     public SnowFlakeGenerator(long datacenterId, long machineId) {
@@ -68,14 +80,7 @@ public class SnowFlakeGenerator {
         this.machineId = machineId;
     }
 
-    public final static String SID_MAX = "zzzzzzzz";
-    public final static String SID_MIN = "00000000";
-
     public static void main(String[] args) throws ParseException {
-        SEQUENCE_BIT = 10;
-        MACHINE_BIT = 5;
-        DATACENTER_BIT = 5;
-
         System.out.println(System.currentTimeMillis());
         System.out.println(new Date().getTime());
         String dateTime = "2021-01-01 00:00:00";
@@ -84,6 +89,9 @@ public class SnowFlakeGenerator {
 
 
         SnowFlakeGenerator snowflake = new SnowFlakeGenerator(1, 1);
+        snowflake.SEQUENCE_BIT = 10;
+        snowflake.MACHINE_BIT = 5;
+        snowflake.DATACENTER_BIT = 5;
         for (int i = 0; i < 100; i++) {
             System.out.println(snowflake.nextSID());
             try {
@@ -92,6 +100,18 @@ public class SnowFlakeGenerator {
                 e.printStackTrace();
             }
         }
+    }
+
+    private long getNextMill() {
+        long mill = getNewstmp();
+        while (mill <= lastStmp) {
+            mill = getNewstmp();
+        }
+        return mill;
+    }
+
+    private long getNewstmp() {
+        return System.currentTimeMillis();
     }
 
     /**
@@ -130,30 +150,10 @@ public class SnowFlakeGenerator {
         }
 
         if (sidStr.length() > 8) {
-            logger.error("sidStr length is greater than 8");
+            log.error("sidStr length is greater than 8");
             return null;
         }
         return sidStr;
     }
 
-    /**
-     * next UUID
-     *
-     * @return
-     */
-    public synchronized String nextUUID() {
-        return UUID.randomUUID().toString().replaceAll("-", "");
-    }
-
-    private long getNextMill() {
-        long mill = getNewstmp();
-        while (mill <= lastStmp) {
-            mill = getNewstmp();
-        }
-        return mill;
-    }
-
-    private long getNewstmp() {
-        return System.currentTimeMillis();
-    }
 }

@@ -1,21 +1,9 @@
 package com.ziyuan.controller;
 
-import com.ziyuan.utils.RedisOperator;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import com.ziyuan.enums.Limits;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 public class BaseController {
-
-    @Autowired
-    private RedisOperator redis;
-
-    public boolean auth(String usrId, String token) {
-        if (StringUtils.isNotBlank(usrId) && StringUtils.isNotBlank(token)) {
-            String realToken = redis.get("token:" + usrId);
-            return !StringUtils.isBlank(realToken) && realToken.equals(token);
-        }
-        return false;
-    }
+    final static int MAX_FOLLOWING_COUNT = Limits.MAX_FOLLOWING_COUNT.value;
 }

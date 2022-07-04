@@ -1,15 +1,10 @@
 package com.ziyuan.controller;
 
-import com.ziyuan.pojo.User;
 import com.ziyuan.pojo.bo.UserBO;
 import com.ziyuan.pojo.vo.UserVO;
 import com.ziyuan.service.UserService;
-import com.ziyuan.utils.CookieUtils;
 import com.ziyuan.utils.JSONResult;
-import com.ziyuan.utils.MD5Utils;
-import com.ziyuan.utils.RedisOperator;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,95 +13,68 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("user")
 public class UserController extends BaseController {
-
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private RedisOperator redis;
-
     @PostMapping("/signup")
-    public JSONResult signup(@RequestBody UserBO userBO) {
+    public JSONResult signup(@RequestBody UserBO userBO) throws Exception {
         String username = userBO.getUsername();
         String password = userBO.getPassword();
 
         // Checks:
-        if (StringUtils.isBlank(username) ||
-                StringUtils.isBlank(password)) {
+        if (StringUtils.isBlank(username) || StringUtils.isBlank(password)) {
             return JSONResult.errorMsg("username and password must not be null");
         }
         if (username.length() > 30) {
-            return JSONResult.errorMsg("username can be max 30 chars");
+            return JSONResult.errorMsg("username can be at most 30 chars");
         }
         if (password.length() < 6) {
             return JSONResult.errorMsg("password must be at least 6 characters");
         }
-
-        User user = userService.getUserByUsername(username);
-        if (user != null) {
+        if (password.length() > 30) {
+            return JSONResult.errorMsg("password can be at most 30 chars");
+        }
+        if (userService.isUsernameExist(username)) {
             return JSONResult.errorMsg("username has been registered");
         }
+
 
         userService.signup(userBO);
         return JSONResult.ok();
     }
 
-
     @PostMapping("/login")
     public JSONResult login(@RequestBody UserBO userBO,
                             HttpServletRequest request,
                             HttpServletResponse response) throws Exception {
+
         String username = userBO.getUsername();
         String password = userBO.getPassword();
 
-        if (StringUtils.isBlank(username) ||
-                StringUtils.isBlank(password)) {
+        if (StringUtils.isBlank(username) || StringUtils.isBlank(password)) {
             return JSONResult.errorMsg("username and password must not be null");
         }
 
-        User user = userService.getUserByUsername(username);
-        if (user == null || !user.getPassword().equals(MD5Utils.getMD5Str(password))) {
-            return JSONResult.errorMsg("username or password is incorrect");
-        }
-
-        String token = UUID.randomUUID().toString();
-        redis.set("token:" + user.getId(), token, 60 * 60 * 24 * 30);
-
-        CookieUtils.setCookie(request, response, "token", token);
-        CookieUtils.setCookie(request, response, "userId", user.getId());
-
-        return JSONResult.ok(ConvertToUserVO(user));
+        UserVO userVO = userService.login(userBO, request, response);
+        if (userVO == null) return JSONResult.errorMsg("username or password is incorrect");
+        return JSONResult.ok(userVO);
     }
 
     @PostMapping("logout")
     public JSONResult logout(
             @RequestBody UserBO userBO,
             HttpServletRequest request,
-            HttpServletResponse response) {
+            HttpServletResponse response) throws Exception {
 
-        if (!auth(userBO.getUserId(), userBO.getToken())) {
-            return JSONResult.errorMsg("please login again");
+        if (!userService.auth(userBO.getUserId(), userBO.getToken(), request, response)) {
+            return JSONResult.errorMsg("already logged out");
         }
 
-        redis.del("token:" + userBO.getUserId());
-        CookieUtils.deleteCookie(request, response, "token");
-        CookieUtils.deleteCookie(request, response, "userId");
-
+        userService.logout(userBO, request, response);
         return JSONResult.ok();
-    }
-
-    private UserVO ConvertToUserVO(User user) {
-        if (user == null) {
-            return null;
-        }
-        UserVO userVO = new UserVO();
-        BeanUtils.copyProperties(user, userVO);
-        userVO.setUserId(user.getId());
-        return userVO;
     }
 }

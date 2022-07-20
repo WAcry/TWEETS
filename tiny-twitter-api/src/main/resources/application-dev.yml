@@ -10,6 +10,17 @@ spring:
     password: password
   kafka:
     bootstrap-servers: 192.168.83.142:9092
+  #  data:
+  #    elasticsearch:
+  #    use 9300 not 9200
+  #      cluster-nodes: 192.168.83.134:9300
+  #      cluster-name: es6
+  #      cluster-nodes: 192.168.1.187:9300, 192.168.1.188:9300, 192.168.1.189:9300
+  #      cluster-name: es6
+
+elasticsearch:
+  cluster-nodes: 192.168.83.134:9300, 192.168.1.188:9300, 192.168.1.189:9300
+  cluster-name: es6
 
 # mybatis config
 mybatis:

@@ -8,6 +8,22 @@ spring:
     url: jdbc:mysql://192.168.83.138:3306/tiny-twitter-dev?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
     username: root
     password: password
+  redis:
+    # Redis Single Instance
+    database: 0
+    host: 192.168.83.145
+    port: 6379
+    password: root
+  #    # Redis Sentinel
+  #    database: 1
+  #    password: ziyuan
+  #    sentinel:
+  #      master: ziyuan-master
+  #      nodes: 192.168.1.191:26379,192.168.1.192:26379,192.168.1.193:26379
+  #    # Redis Cluster
+  #    password: ziyuan
+  #    cluster:
+  #      nodes: 192.168.1.201:6379,192.168.1.202:6379,192.168.1.203:6379,192.168.1.204:6379,192.168.1.205:6379,192.168.1.206:6379
   kafka:
     bootstrap-servers: 192.168.83.142:9092
   #  data:

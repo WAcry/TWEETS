@@ -6,7 +6,7 @@ The project focuses on high performance, distributed, MVC architecture, and prov
 
 A highlight is that timeline service implements the classic Push Model+Pull Model.
 
-It is being refactored to split into microservices @WAcry/tweets-cloud.
+It is being refactored to split into microservices  @WAcry/tweets-cloud.
 
 ## Tech Stack
 

@@ -1,6 +1,6 @@
 # tiny-twitter
 
-This project is a tiny twitter based on Spring Boot and Spring Cloud. The front end uses React.js + Ant Design.
+This project is a tiny twitter based on Spring Boot. The front end uses React.js + Ant Design.
 
 The project focuses on high performance, distributed, MVC architecture, and provides RESTful like APIs.
 
